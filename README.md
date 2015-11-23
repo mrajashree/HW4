@@ -6,7 +6,7 @@ curl -sSL https://get.docker.com/ | sudo bash
 ```
 
 ##File IO
-On the new droplet, after installing docker, copy the Dockerfile from the repo in folder File_IO.
+On the new droplet, after installing docker, use the Dockerfile from the repo in folder File_IO.
 Contents of Dockerfile:
 ```
 FROM ubuntu:14.04
@@ -26,7 +26,7 @@ sudo docker run -td --name socat_cont1 img_socat
 sudo docker exec -it socat_cont1 bash
 sh socat_version.sh > out.txt
 ```
-contents of socat_version.sh file:
+You'll have to create the socat_version.sh file with following contents:
 ```
 #!/bin/bash
 
@@ -88,6 +88,7 @@ then run:
 docker-compose up -d
 sudo docker run -it --link redis_ambassador_client:redis --name redis_client relateiq/redis-cli
 ```
+Both docker-compose.yml files are given in the ambassador folder of the repo
 * Four containers on two different hosts are running
 * Now, set/get operations can be performed. This is shown in the screencast.
 
@@ -128,7 +129,7 @@ git remote add green file:///root/deploy/green.git
 * The image is pushed to local registry
 * App is being deployed on green_slice & blue_slice depending on the push
 * Docker pull, stop, rm and run commands are pulling from registery, stopping, and restarting containers.
-All these commands are shown below as contents of the post-receive hooks
+All these commands are shown below as contents of the post-receive hooks, and the post-receive hooks for green_slice and blue_slice are a part of the docker_deploy folder of the repo
 post-receive in blue.git/hooks:
 ```
 GIT_WORK_TREE=/root/deploy/blue-www/ git checkout -f
