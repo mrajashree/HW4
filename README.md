@@ -46,7 +46,7 @@ cat result.txt
 ```
 After this, the file_io part is finished.
 
-## Ambassador
+## Ambassador pattern
 * We'll be using two hosts, that is two digital ocean droplets.
 Install docker & docker compose on both hosts:
 ```
@@ -91,7 +91,7 @@ sudo docker run -it --link redis_ambassador_client:redis --name redis_client rel
 * Four containers on two different hosts are running
 * Now, set/get operations can be performed. This is shown in the screencast.
 
-## Deploy docker
+## Docker Deploy
 Install git on the new droplet:
 ```
 sudo apt-get install git
