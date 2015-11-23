@@ -20,7 +20,7 @@ Using the Dockerfile create a new image:
 ```
 sudo docker build -t img_socat .
 ```
-1. These are the steps to run the 1st container, which will run a command that outputs to a file
+* These are the steps to run the 1st container, which will run a command that outputs to a file
 ```
 sudo docker run -td --name socat_cont1 img_socat
 sudo docker exec -it socat_cont1 bash
@@ -32,11 +32,11 @@ contents of socat_version.sh file:
 
 socat -V
 ```
-2. Using socat: This socat command maps file access to read file container and expose over port 9001
+* Using socat: This socat command maps file access to read file container and expose over port 9001
 ```
 socat tcp-l:9001,reuseaddr,fork system:'cat out.txt',nofork
 ```
-3. These are the steps to create the 2nd container or the linked container, which will link to first and access data (out.txt) on it.
+* These are the steps to create the 2nd container or the linked container, which will link to first and access data (out.txt) on it.
 ```
 sudo docker run -td --name socat_cont2 --link socat_cont1:readlink img_socat
 sudo docker exec -it socat_cont2 bash
@@ -47,14 +47,14 @@ cat result.txt
 After this, the file_io part is finished.
 
 ## Ambassador
-1. We'll be using two hosts, that is two digital ocean droplets.
+* We'll be using two hosts, that is two digital ocean droplets.
 Install docker & docker compose on both hosts:
 ```
 curl -sSL https://get.docker.com/ | sudo bash
 sudo apt-get -y install python-pip
 sudo pip install docker-compose
 ```
-2. Docker-compose is being used to configure containers as follows:
+* Docker-compose is being used to configure containers as follows:
 Contents of docker-compose.yml on redis server side to configure the containers
 ```
 redis:
@@ -88,8 +88,8 @@ then run:
 docker-compose up -d
 sudo docker run -it --link redis_ambassador_client:redis --name redis_client relateiq/redis-cli
 ```
-3. Four containers on two different hosts are running
-4. Now, set/get operations can be performed. This is shown in the screencast.
+* Four containers on two different hosts are running
+* Now, set/get operations can be performed. This is shown in the screencast.
 
 ## Deploy docker
 Install git on the new droplet:
@@ -124,10 +124,10 @@ git remote add blue file:///root/deploy/blue.git
 git remote add green file:///root/deploy/green.git
 ```
 
-1. A git commit is building a new image (new_img) using the Dockerfile from the App repo (which gets copied to /root/deploy/blue-www/ & /root/deploy/blue-www/)
-2. The image is pushed to local registry
-3. App is being deployed on green_slice & blue_slice depending on the push
-4. Docker pull, stop, rm and run commands are pulling from registery, stopping, and restarting containers.
+* A git commit is building a new image (new_img) using the Dockerfile from the App repo (which gets copied to /root/deploy/blue-www/ & /root/deploy/blue-www/)
+* The image is pushed to local registry
+* App is being deployed on green_slice & blue_slice depending on the push
+* Docker pull, stop, rm and run commands are pulling from registery, stopping, and restarting containers.
 All these commands are shown below as contents of the post-receive hooks
 post-receive in blue.git/hooks:
 ```
