@@ -1,0 +1,14 @@
+GIT_WORK_TREE=/root/deploy/green-www/ git checkout -f
+
+sudo docker rm new_img
+sudo docker build -t new_img /root/deploy/green-www/
+
+sudo docker tag -f new_img localhost:5000/deploy_img:latest
+sudo docker push localhost:5000/deploy_img:latest
+
+sudo docker pull localhost:5000/deploy_img:latest
+sudo docker stop $(sudo docker ps -a -f 'name=green*' -q)
+sudo docker rm $(sudo docker ps -a -f 'name=green*' -q)
+
+sudo docker run -p 8090:8080 -td --name green_slice localhost:5000/deploy_img:latest
+sudo docker exec -td green_slice sh -C "node /src/main.js 8080"

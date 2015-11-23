@@ -1,0 +1,14 @@
+GIT_WORK_TREE=/root/deploy/blue-www/ git checkout -f
+
+sudo docker rm new_img
+sudo docker build -t new_img /root/deploy/blue-www/
+
+sudo docker tag -f new_img localhost:5000/deploy_img:latest
+sudo docker push localhost:5000/deploy_img:latest
+
+sudo docker pull localhost:5000/deploy_img:latest
+sudo docker stop $(sudo docker ps -a -f 'name=blue*' -q)
+sudo docker rm $(sudo docker ps -a -f 'name=blue*' -q)
+
+sudo docker run -p 8080:8080 -td --name blue_slice localhost:5000/deploy_img:latest
+sudo docker exec -td blue_slice sh -c "node /src/main.js 8080"
